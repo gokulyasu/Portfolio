@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ─────────────────────────── */
+:root {
+  --bg:          #0c0c0c;
+  --surface:     rgba(255, 255, 255, 0.04);
+  --border:      rgba(255, 255, 255, 0.08);
+  --text:        #f0ede8;
+  --text-muted:  rgba(240, 237, 232, 0.38);
+  --accent:      #d4f53c;
+  --accent-dim:  rgba(212, 245, 60, 0.1);
+  --accent-rgb:  212, 245, 60;
+}
+
+/* ─── Base ───────────────────────────────────── */
+@layer base {
+  html {
+    /* Lenis handles smooth scroll — disable native */
+    scroll-behavior: auto;
+  }
+
+  * {
+    cursor: none !important;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  ::selection {
+    background: rgba(var(--accent-rgb), 0.18);
+    color: var(--accent);
+  }
+
+  /* Hide scrollbar — Lenis shows custom or none */
+  ::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; }
+}
+
+/* ─── Utilities ──────────────────────────────── */
+@layer utilities {
+  /* Typography */
+  .text-muted   { color: var(--text-muted); }
+  .text-accent  { color: var(--accent); }
+
+  /* Section watermark numbers */
+  .watermark {
+    font-size: clamp(6rem, 16vw, 18rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--text);
+    opacity: 0.04;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Cards / surfaces */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .card:hover {
+    border-color: rgba(var(--accent-rgb), 0.35);
+  }
+
+  /* Accent left-border fact rows */
+  .fact-row {
+    border-left: 2px solid var(--border);
+    padding-left: 1rem;
+    transition: border-color 0.2s ease;
+  }
+  .fact-row:hover {
+    border-left-color: var(--accent);
+  }
+
+  /* Horizontal rule */
+  .rule {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Section label */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* Tag chips */
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .tag:hover {
+    color: var(--accent);
+    border-color: rgba(var(--accent-rgb), 0.45);
+  }
+
+  /* Primary button */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    background: var(--accent);
+    color: #0c0c0c;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.35);
+  }
+
+  /* Outline button */
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Underline link animation */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .link-underline:hover::after { width: 100%; }
+
+  /* Project card hover top accent bar */
+  .project-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(var(--accent-rgb), 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+  .project-card:hover::before {
+    transform: scaleX(1);
+  }
+}
